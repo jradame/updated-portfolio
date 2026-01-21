@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply dark;
+}
+
+body, #root {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Typing Effect Cursor */
+.blinking-cursor {
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Fade in and slide-in animations */
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-full {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s ease-out forwards;
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out forwards;
+}
+.animate-slide-in-full {
+  animation: slide-in-full 0.5s ease-out forwards;
+}
+
+/* Modal slide in halves */
+.modal__half {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.modal__left.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out forwards;
+}
+
+.modal__right.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
