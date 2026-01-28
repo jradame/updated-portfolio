@@ -16,17 +16,19 @@ const Hero = ({ loading }) => {
 
     const timeout = setTimeout(() => {
       if (!deleting) {
-        setText(currentRole.slice(0, charIndex + 1));
-        setCharIndex((prev) => prev + 1);
+        const nextLength = charIndex + 1;
+        setText(currentRole.slice(0, nextLength));
+        setCharIndex(nextLength);
 
-        if (charIndex + 1 === currentRole.length) {
+        if (nextLength === currentRole.length) {
           setTimeout(() => setDeleting(true), 1200);
         }
       } else {
-        setText(currentRole.slice(0, charIndex - 1));
-        setCharIndex((prev) => prev - 1);
+        const nextLength = charIndex - 1;
+        setText(currentRole.slice(0, nextLength));
+        setCharIndex(nextLength);
 
-        if (charIndex - 1 === 0) {
+        if (nextLength === 0) {
           setDeleting(false);
           setRoleIndex((prev) => (prev + 1) % roles.length);
         }
@@ -37,9 +39,9 @@ const Hero = ({ loading }) => {
   }, [charIndex, deleting, roleIndex]);
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center px-4 py-12 bg-black text-white">
+    <section className="w-full min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-black text-white">
       <div className="max-w-5xl w-full flex flex-col md:flex-row items-center gap-12">
-        {/* Image container */}
+        {/* Image */}
         <div className="w-40 h-40 flex-shrink-0">
           {loading ? (
             <Skeleton circle height={160} width={160} />
@@ -52,7 +54,7 @@ const Hero = ({ loading }) => {
           )}
         </div>
 
-        {/* Text Content */}
+        {/* Text */}
         <div className="flex-1 text-center md:text-left">
           {loading ? (
             <>
@@ -66,11 +68,14 @@ const Hero = ({ loading }) => {
           ) : (
             <>
               <h1 className="text-4xl font-bold mb-4">
-                Hi, I am <span className="text-indigo-400">JUSTIN ADAME</span>
+                Hi, I am{" "}
+                <span className="text-indigo-400">JUSTIN ADAME</span>
               </h1>
-              <p className="text-xl mb-6 max-w-xl">
+              <p className="text-xl mb-6 max-w-xl mx-auto md:mx-0">
                 I specialize in{" "}
-                <span className="text-indigo-400 font-semibold">{text}</span>
+                <span className="text-indigo-400 font-semibold">
+                  {text}
+                </span>
                 <span className="blinking-cursor">|</span>
               </p>
             </>

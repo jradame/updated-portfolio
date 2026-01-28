@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Navbar = ({ openModal }) => {
   return (
@@ -19,14 +19,19 @@ const Navbar = ({ openModal }) => {
         {/* Navigation */}
         <nav className="space-x-6 text-sm font-medium">
           <button
-            onClick={() => openModal('about')}
+            onClick={() => openModal("about")}
             className="hover:text-indigo-400 transition"
           >
             About
           </button>
-          <a href="#projects" className="hover:text-indigo-400 transition">Projects</a>
+          <a
+            href="#projects"
+            className="hover:text-indigo-400 transition"
+          >
+            Projects
+          </a>
           <button
-            onClick={() => openModal('contact')}
+            onClick={() => openModal("contact")}
             className="hover:text-indigo-400 transition"
           >
             Contact

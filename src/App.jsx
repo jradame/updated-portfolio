@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Modal from './components/Modal';
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Modal from "./components/Modal";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,9 +21,14 @@ function App() {
     <>
       <Navbar openModal={openModal} />
       <main className="pt-16">
-        <Hero openModal={openModal} />
+        <Hero loading={false} />
+        {/* Projects etc */}
       </main>
-      <Modal isOpen={modalOpen} modalType={modalType} onClose={closeModal} />
+      <Modal
+        isOpen={modalOpen}
+        modalType={modalType}
+        onClose={closeModal}
+      />
     </>
   );
 }

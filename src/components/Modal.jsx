@@ -1,109 +1,168 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHtml5,
+  faCss3Alt,
+  faJs,
+  faReact,
+  faFigma,
+} from "@fortawesome/free-brands-svg-icons";
 
-const Modal = ({ isOpen, modalType, onClose }) => {
-  const [shouldRender, setShouldRender] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+const techStack = [
+  { icon: faHtml5, label: "HTML5", color: "text-[#E44D26]" },
+  { icon: faCss3Alt, label: "CSS3", color: "text-[#1572B6]" },
+  { icon: faJs, label: "JavaScript", color: "text-[#F0DB4F]" },
+  { icon: faReact, label: "React", color: "text-[#61DAFB]" },
+  { icon: faFigma, label: "Figma", color: "text-[#A259FF]" },
+];
 
-  useEffect(() => {
-    if (isOpen) {
-      setShouldRender(true);
-      requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
-    } else {
-      setIsVisible(false);
-      const timeout = setTimeout(() => setShouldRender(false), 400);
-      return () => clearTimeout(timeout);
+const Modal = ({ isOpen, onClose, modalType }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  // If not open and not playing close animation, don’t render
+  if (!isOpen && !isClosing) return null;
+
+  const isContact = modalType === "contact";
+
+  const startClose = () => {
+    setIsClosing(true);
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      startClose();
     }
-  }, [isOpen]);
+  };
 
-  if (!shouldRender) return null;
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      setIsClosing(false);
+      onClose();
+    }
+  };
+
+  const animationClass = (() => {
+    if (isClosing) {
+      // Exit directions
+      return isContact
+        ? "animate-slide-out-left"
+        : "animate-slide-out-right";
+    }
+    // Enter directions
+    return isContact
+      ? "animate-slide-in-right"
+      : "animate-slide-in-left";
+  })();
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-      onClick={onClose}
+      onClick={handleBackdropClick}
     >
-      {/* Container */}
       <div
-        className="relative w-full max-w-5xl h-[500px] flex"
-        onClick={(e) => e.stopPropagation()}
+        className={`
+          relative w-full max-w-xl bg-gray-900 text-white rounded-xl
+          p-8 shadow-2xl min-h-[420px] flex
+          ${animationClass}
+        `}
+        onAnimationEnd={handleAnimationEnd}
       >
-        {/* Close Button */}
+        {/* Close button */}
         <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white text-2xl hover:text-indigo-400 transition z-50"
-          aria-label="Close modal"
+          onClick={startClose}
+          className="absolute top-4 right-4 text-white text-2xl leading-none"
+          aria-label="Close"
         >
-          ✕
+          &times;
         </button>
 
-        {/* LEFT PANEL — ABOUT */}
-        <div
-          className={`w-1/2 h-full bg-zinc-900 text-white p-8 flex flex-col justify-center
-            ${isVisible ? "animate-slide-in-left" : ""}`}
-        >
-          {modalType === "about" && (
-            <>
-              <h2 className="text-3xl font-bold mb-4">About Me</h2>
-              <p className="text-gray-300 mb-6">
-                I’m a frontend developer focused on building clean, responsive,
-                and user‑friendly interfaces using modern tools like React,
-                Tailwind, and Vite.
-              </p>
+        {isContact ? (
+          // CONTACT CARD
+          <div className="flex flex-col h-full w-full">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              Let&apos;s work together
+            </h2>
+            <p className="text-base md:text-lg text-gray-200 leading-relaxed mb-6">
+              If you&apos;re looking for a frontend developer who cares about
+              details, performance, and clean UI, drop a message below and
+              we&apos;ll get something on the calendar.
+            </p>
 
-              <div className="flex gap-4 flex-wrap">
-                <span className="px-3 py-1 rounded bg-indigo-500/20 text-indigo-400">
-                  React
-                </span>
-                <span className="px-3 py-1 rounded bg-indigo-500/20 text-indigo-400">
-                  Tailwind
-                </span>
-                <span className="px-3 py-1 rounded bg-indigo-500/20 text-indigo-400">
-                  JavaScript
-                </span>
-                <span className="px-3 py-1 rounded bg-indigo-500/20 text-indigo-400">
-                  UI/UX
-                </span>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* RIGHT PANEL — CONTACT */}
-        <div
-          className={`w-1/2 h-full bg-zinc-800 text-white p-8 flex flex-col justify-center
-            ${isVisible ? "animate-slide-in-right" : ""}`}
-        >
-          {modalType === "contact" && (
-            <>
-              <h2 className="text-3xl font-bold mb-4">Contact Me</h2>
-              <form className="flex flex-col gap-4">
+            <form className="space-y-4 mt-auto">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
                   placeholder="Your name"
-                  className="bg-zinc-900 border border-zinc-700 rounded px-4 py-2 focus:outline-none focus:border-indigo-400"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded border border-gray-700 focus:outline-none focus:border-indigo-500"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Email
+                </label>
                 <input
                   type="email"
-                  placeholder="Your email"
-                  className="bg-zinc-900 border border-zinc-700 rounded px-4 py-2 focus:outline-none focus:border-indigo-400"
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded border border-gray-700 focus:outline-none focus:border-indigo-500"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Message
+                </label>
                 <textarea
                   rows="4"
-                  placeholder="Your message"
-                  className="bg-zinc-900 border border-zinc-700 rounded px-4 py-2 focus:outline-none focus:border-indigo-400"
-                />
-                <button
-                  type="submit"
-                  className="mt-2 bg-indigo-500 hover:bg-indigo-600 transition rounded px-6 py-2 font-semibold"
+                  placeholder="Tell me a little about the project or role..."
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded border border-gray-700 focus:outline-none focus:border-indigo-500"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-semibold"
+              >
+                Send message
+              </button>
+            </form>
+          </div>
+        ) : (
+          // ABOUT CARD
+          <div className="flex flex-col h-full w-full">
+            <h2 className="text-3xl font-bold mb-4">About me</h2>
+
+            <p className="text-base md:text-lg text-gray-200 leading-relaxed mb-4">
+              I&apos;m Justin Adame, a frontend developer and UI/UX designer
+              focused on clean, responsive interfaces and production-ready React
+              builds.
+            </p>
+            <p className="text-base md:text-lg text-gray-200 leading-relaxed mb-4">
+              I care a lot about spacing, typography, and the small details that
+              make a layout feel intentional rather than generic.
+            </p>
+            <p className="text-base md:text-lg text-gray-200 leading-relaxed">
+              Most of my work leans on React, JavaScript, and modern CSS, with
+              an emphasis on smooth flows, readable code, and interfaces that
+              feel good to use on both desktop and mobile.
+            </p>
+
+            {/* Tech icons at bottom */}
+            <div className="grid grid-cols-5 gap-4 justify-items-center mt-8 md:mt-10 pt-4 border-t border-gray-800 mt-auto">
+              {techStack.map(({ icon, label, color }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center gap-1 p-2 bg-gray-800 rounded-lg"
                 >
-                  Send Message
-                </button>
-              </form>
-            </>
-          )}
-        </div>
+                  <FontAwesomeIcon icon={icon} className={`${color} text-3xl`} />
+                  <span className="text-xs font-medium text-gray-100">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
