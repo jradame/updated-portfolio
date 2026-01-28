@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const roles = ["Frontend Developement", "and UI/UX Design"];
+const roles = ["Frontend Developer", "UI/UX Designer"];
 
 const Hero = ({ loading }) => {
   const [text, setText] = useState("");
@@ -67,16 +67,24 @@ const Hero = ({ loading }) => {
             </>
           ) : (
             <>
-              <h1 className="text-4xl font-bold mb-4">
+              <h1 className="text-4xl font-bold mb-3">
                 Hi, I am{" "}
                 <span className="text-indigo-400">JUSTIN ADAME</span>
               </h1>
-              <p className="text-xl mb-6 max-w-xl mx-auto md:mx-0">
-                I specialize in{" "}
+
+              {/* Typing line */}
+              <p className="text-xl mb-2">
+                I&apos;m a{" "}
                 <span className="text-indigo-400 font-semibold">
                   {text}
                 </span>
                 <span className="blinking-cursor">|</span>
+              </p>
+
+              {/* Static supporting sentence */}
+              <p className="text-base md:text-lg text-gray-300 max-w-xl mx-auto md:mx-0">
+                I design and build responsive, production-ready interfaces in
+                React with a heavy focus on layout, typography, and polish.
               </p>
             </>
           )}
