@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const roles = ["Frontend Developer", "UI/UX Designer"];
+const roles = ["Frontend Developement", "and UI/UX Design"];
 
 const Hero = ({ loading }) => {
   const [text, setText] = useState("");
