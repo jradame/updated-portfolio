@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Modal from "./components/Modal";
+import Projects from "./components/Projects";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +23,7 @@ function App() {
       <Navbar openModal={openModal} />
       <main className="pt-16">
         <Hero loading={false} />
-        {/* Projects etc */}
+        <Projects /> {/* hero on top, row of 4 cards right below */}
       </main>
       <Modal
         isOpen={modalOpen}

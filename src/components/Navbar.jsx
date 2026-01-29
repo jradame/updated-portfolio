@@ -24,12 +24,10 @@ const Navbar = ({ openModal }) => {
           >
             About
           </button>
-          <a
-            href="#projects"
-            className="hover:text-indigo-400 transition"
-          >
-            Projects
-          </a>
+         <a href="#projects" className="hover:text-indigo-400 transition">
+  Projects
+</a>
+
           <button
             onClick={() => openModal("contact")}
             className="hover:text-indigo-400 transition"
