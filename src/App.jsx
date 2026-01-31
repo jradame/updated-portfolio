@@ -1,36 +1,17 @@
-import { useState } from "react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Modal from "./components/Modal";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
 import Projects from "./components/Projects";
+import TipTrackCaseStudy from "./components/TipTrackCaseStudy";
+import EarlyDropCaseStudy from "./components/EarlyDropCaseStudy";
 
 function App() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(null);
-
-  const openModal = (type) => {
-    setModalType(type);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setModalType(null);
-  };
-
   return (
-    <>
-      <Navbar openModal={openModal} />
-      <main className="pt-16">
-        <Hero loading={false} />
-        <Projects /> {/* hero on top, row of 4 cards right below */}
-      </main>
-      <Modal
-        isOpen={modalOpen}
-        modalType={modalType}
-        onClose={closeModal}
-      />
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/projects" element={<Projects />} />
+      <Route path="/projects/tiptrack" element={<TipTrackCaseStudy />} />
+      <Route path="/projects/earlydrop" element={<EarlyDropCaseStudy />} />
+    </Routes>
   );
 }
 
